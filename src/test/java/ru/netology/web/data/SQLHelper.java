@@ -14,25 +14,28 @@ public class SQLHelper {
 
     private SQLHelper() {
     }
+
     //метод подключения к БД
     private static Connection getConn() throws SQLException {
         return DriverManager.getConnection(System.getProperty("db.url"), "app", "pass");
     }
+
     // метод возвращения кода верификации (последний в списке)
     @SneakyThrows
     public static DataHelper.Verification getVerificationCode() {
-        var codeSQLQuery = "SELECT code FROM auth_codes ORDER BY created LIMIT 1";
+        var codeSQLQuery = "SELECT code FROM auth_codes ORDER BY created DESC LIMIT 1";
         var connection = getConn();
-        var code = runner.query(connection,codeSQLQuery, new ScalarHandler<String>());
+        var code = runner.query(connection, codeSQLQuery, new ScalarHandler<String>());
         return new DataHelper.Verification(code);
     }
+
     //метод очистки таблиц
     @SneakyThrows
     public static void cleanDB() {
         var connection = getConn();
-        runner.execute(connection,"DELETE FROM auth_codes");
-        runner.execute(connection,"DELETE FROM card_transactions");
-        runner.execute(connection,"DELETE FROM cards");
-        runner.execute(connection,"DELETE FROM users");
+        runner.execute(connection, "DELETE FROM auth_codes");
+        runner.execute(connection, "DELETE FROM card_transactions");
+        runner.execute(connection, "DELETE FROM cards");
+        runner.execute(connection, "DELETE FROM users");
     }
 }

@@ -17,15 +17,14 @@ public class LoginPage {
         errorNotification.shouldBe(Condition.visible);
     }
 
-    public void setAuthInfo (DataHelper.AuthInfo info) {
+    public void setAuthInfo(DataHelper.AuthInfo info) {
         loginInput.sendKeys(info.getUsername());
         passwordInput.sendKeys(info.getPassword());
         buttonLogin.shouldHave(Condition.exactText("Продолжить")).click();
     }
+
     public VerificationPage setAuthInfoSuccess(DataHelper.AuthInfo info) {
-        loginInput.sendKeys(info.getUsername());
-        passwordInput.sendKeys(info.getPassword());
-        buttonLogin.shouldHave(Condition.exactText("Продолжить")).click();
+        setAuthInfo(info);
         return new VerificationPage();
     }
 }

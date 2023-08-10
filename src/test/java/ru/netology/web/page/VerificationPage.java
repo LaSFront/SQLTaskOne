@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import ru.netology.web.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.google.common.base.Verify.verify;
 
 public class VerificationPage {
     private final SelenideElement codeField = $("[data-test-id='code'] input").shouldBe(Condition.visible);
@@ -16,21 +15,19 @@ public class VerificationPage {
         codeField.shouldBe(Condition.visible);
     }
 
-   public void setVerifyInfo(DataHelper.Verification info) {
+    public void setVerifyInfo(DataHelper.Verification info) {
         codeField.sendKeys(info.getCode());
         verifyButton.click();
     }
 
     public PersonalAccount setVerifyInfoSuccess(DataHelper.Verification info) {
-        codeField.sendKeys(info.getCode());
-        verifyButton.click();
+        setVerifyInfo(info);
         return new PersonalAccount();
     }
 
     public void errorVerify() {
         errorNotification.shouldBe(Condition.visible);
     }
-
 
 
 }
